@@ -43,26 +43,5 @@ window.addEventListener('DOMContentLoaded', function(){
             }
             updateClock();
     }
-    setInterval(countTimer, 100, '19 feb 2020');
+    setInterval(countTimer, 100, '21 feb 2020');
 });
-
-// deadline то время до которого функция будет отсчитывать
-
-
-
-let dateNew = new Date();
-
-dateNew.setDate(dateNew.getDate() - 1);
-console.log('dateNew: ', dateNew); // так мы вычислили какой день был вчера
-
-console.log(dateNew.toDateString()); // получаем дату в виде строки
-console.log(dateNew.toTimeString()); // получаем время в виде строки
-
-console.log(dateNew.toLocaleDateString('rus')); // получаем дату в виде строки / можем добавить локализацию
-console.log(dateNew.toLocaleTimeString('rus')); // получаем время в виде строки 
-
-
-console.log(dateNew.toISOString('rus').substr(0, 10)); //  получаем время в iso формате оставляем только первые 10 символов
-
-console.log(Date.now()); // количество мл секунд прошедших с 19070 года 1 января
-console.log(Date.parse('24 april 1998')); // количество мл секунд прошедших 1998 года 24 апреля
