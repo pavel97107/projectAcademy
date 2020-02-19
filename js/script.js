@@ -61,8 +61,7 @@ window.addEventListener('DOMContentLoaded', function(){
         menuItems.forEach((item) => item.addEventListener('click',handlerMenu));
     };
     toggleMenu();
-
-    //popup
+    //Модульное окно
      const togglePopUp = () => {
         const popUp = document.querySelector('.popup'),
         btnPopUp = document.querySelectorAll('.popup-btn'),
@@ -80,5 +79,7 @@ window.addEventListener('DOMContentLoaded', function(){
      };
      togglePopUp();
 
-     
+
+
+      
 });
