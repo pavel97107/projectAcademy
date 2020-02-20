@@ -57,8 +57,19 @@ window.addEventListener('DOMContentLoaded', function(){
             };
 
         btnMenu.addEventListener('click', handlerMenu);
-        closeBtn.addEventListener('click', handlerMenu);
-        menuItems.forEach((item) => item.addEventListener('click',handlerMenu));
+        // closeBtn.addEventListener('click', handlerMenu);
+        // menuItems.forEach((item) => item.addEventListener('click',handlerMenu));
+
+        menu.addEventListener('click', (event) =>{
+            let target = event.target;
+                target = target.closest('ul>li');
+                if(target){
+                    handlerMenu();
+                } else {
+                    handlerMenu();
+                }
+                    
+            });
     };
     toggleMenu();
     //Модульное окно
