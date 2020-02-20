@@ -43,32 +43,36 @@ window.addEventListener('DOMContentLoaded', function(){
             }
             updateClock();
     }
-    setInterval(countTimer, 1000, '21 feb 2020');
+    setInterval(countTimer, 1000, '28 feb 2020');
 
     //Меню
     const toggleMenu = () => {
         const btnMenu = document.querySelector('.menu'),
             menu = document.querySelector('menu'),
             closeBtn = document.querySelector('.close-btn'),
-            menuItems = menu.querySelectorAll('ul>li');
+            menuItems = menu.querySelectorAll('ul>li'),
+            body = document.querySelector('body');
 
             const handlerMenu = () => {
                 menu.classList.toggle('active-menu');
             };
 
-        btnMenu.addEventListener('click', handlerMenu);
-        // closeBtn.addEventListener('click', handlerMenu);
-        // menuItems.forEach((item) => item.addEventListener('click',handlerMenu));
 
+
+        btnMenu.addEventListener('click', handlerMenu);
         menu.addEventListener('click', (event) =>{
             let target = event.target;
+            if(target === closeBtn){
+                handlerMenu();
+                return;
+            }
+            menuItems.forEach((item)=>{
                 target = target.closest('ul>li');
-                if(target){
-                    handlerMenu();
-                } else {
+                if(item === target){
                     handlerMenu();
                 }
-                    
+                return;
+            });
             });
     };
     toggleMenu();
