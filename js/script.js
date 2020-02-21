@@ -172,11 +172,27 @@ window.addEventListener('DOMContentLoaded', function(){
     const slider = () => {
         const slide = document.querySelectorAll('.portfolio-item'),
             btn = document.querySelectorAll('.portfolio-btn'),
-            dot = document.querySelectorAll('.dot'),
-            slider = document.querySelector('.portfolio-content');
+            slider = document.querySelector('.portfolio-content'),
+            dotsPortfolio = document.querySelector('.portfolio-dots');
 
             let currentSlide = 0,// переменная счетчик (отслеживает какой слайд сейчас активен)
-                interval; 
+                interval;
+
+            const createDot = () => {
+                 let newDot = document.createElement('li');
+                 newDot.classList.add('dot');
+                 dotsPortfolio.appendChild(newDot);
+
+            };
+            const appDot = () => {
+                for( let i = 0; i < slide.length; i++){
+                    createDot();
+                }
+            };
+
+            appDot();
+
+            let dot = document.querySelectorAll('.dot');
 
             const prevSlide = (elem, index, strClass) => {
                 elem[index].classList.remove(strClass);
