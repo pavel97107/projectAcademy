@@ -95,7 +95,7 @@ window.addEventListener("DOMContentLoaded", function() {
     }, 2);
 
     function draw(timerRemaining) {
-      popUpContent.style.left = timerRemaining * 2.7 + "px";
+      popUpContent.style.left = timerRemaining * 2.5 + "px";
     }
 
     if (window.innerWidth <= 768) {
