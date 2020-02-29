@@ -1,4 +1,4 @@
-window.addEventListener("DOMContentLoaded", function() {
+window.addEventListener("DOMContentLoaded", function () {
   "use strict";
 
   // Timer
@@ -85,7 +85,7 @@ window.addEventListener("DOMContentLoaded", function() {
   //Всплывашка
   function popUpShow() {
     let start = Date.now();
-    const timer = setInterval(function() {
+    const timer = setInterval(function () {
       let timerRemaining = Date.now() - start;
       if (timerRemaining >= 250) {
         clearInterval(timer);
@@ -364,4 +364,66 @@ window.addEventListener("DOMContentLoaded", function() {
   };
 
   command();
+
+
+  // send-ajax-form
+
+  const sendForm = (selector, selectorInput) => {
+    const errorMEssage = 'Что то пошло не так';
+    const loadMessage = 'Загрузка...';
+    const successMessage = 'Спасибо! Мы скоро с вами свяжемся';
+    const form = document.getElementById(selector);
+    let inputForm = document.querySelectorAll(selectorInput);
+    console.log(inputForm);
+    const statusMessage = document.createElement('div');
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      form.appendChild(statusMessage);
+      statusMessage.textContent = loadMessage;
+
+      const formData = new FormData(form); // получаем данные с этой формы (!); считывает данные с нашей формы
+      let body = {};
+      formData.forEach((val, key) => {
+        body[key] = val;
+      });
+      postData(body,
+        () => {
+          statusMessage.textContent = successMessage;
+        },
+        (error) => {
+          console.log(error);
+          statusMessage.textContent = errorMEssage;
+        });
+    });
+
+    const postData = (body, outputData, errorData) => {
+      const request = new XMLHttpRequest();
+      request.addEventListener('readystatechange', () => {
+        if (request.readyState !== 4) {
+          return;
+        }
+        if (request.status === 200) {
+          outputData();
+          inputForm.forEach((item) => {
+            item.value = '';
+          });
+        } else {
+          errorData(request.status);
+
+        }
+      });
+      request.open('POST', './server.php');
+      request.setRequestHeader('Content-Type', 'application/json'); // настраиваем заголовки // Данные отправляем с формы в JSON формат
+      request.send(JSON.stringify(body)); // отправляем данные
+    };
+
+
+  };
+
+  sendForm('form1', 'input');
+  sendForm('form2', 'input');
+  sendForm('form3', 'input');
+
+
 });
