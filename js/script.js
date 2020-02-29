@@ -374,8 +374,22 @@ window.addEventListener("DOMContentLoaded", function () {
     const successMessage = 'Спасибо! Мы скоро с вами свяжемся';
     const form = document.getElementById(selector);
     let inputForm = document.querySelectorAll(selectorInput);
-    console.log(inputForm);
     const statusMessage = document.createElement('div');
+
+    form.addEventListener('input', () => {
+      const validForm = () => {
+        inputForm.forEach((item) => {
+          let textInput = item.value;
+          if (item.name === 'user_phone') {
+            item.value = textInput.replace(/[^0-9\+]/g, '');
+          }
+          if (item.name === 'user_name' | item.name === 'user_message') {
+            item.value = textInput.replace(/[^а-яА-Я\s]/g, ''); // указывае какие символы пропускает input
+          }
+        });
+      };
+      validForm();
+    });
 
     form.addEventListener('submit', (event) => {
       event.preventDefault();
@@ -417,8 +431,6 @@ window.addEventListener("DOMContentLoaded", function () {
       request.setRequestHeader('Content-Type', 'application/json'); // настраиваем заголовки // Данные отправляем с формы в JSON формат
       request.send(JSON.stringify(body)); // отправляем данные
     };
-
-
   };
 
   sendForm('form1', 'input');
