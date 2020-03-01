@@ -1,4 +1,4 @@
-window.addEventListener("DOMContentLoaded", function () {
+window.addEventListener("DOMContentLoaded", function() {
   "use strict";
 
   // Timer
@@ -85,7 +85,7 @@ window.addEventListener("DOMContentLoaded", function () {
   //Всплывашка
   function popUpShow() {
     let start = Date.now();
-    const timer = setInterval(function () {
+    const timer = setInterval(function() {
       let timerRemaining = Date.now() - start;
       if (timerRemaining >= 250) {
         clearInterval(timer);
@@ -342,6 +342,7 @@ window.addEventListener("DOMContentLoaded", function () {
     commandRow.addEventListener("mouseout", event => {
       let target = event.target;
       target = target.closest(".command__photo");
+
       if (target === imgCommand[0]) {
         target.src = key1;
       }
@@ -365,33 +366,37 @@ window.addEventListener("DOMContentLoaded", function () {
 
   command();
 
-
   // send-ajax-form
 
   const sendForm = (selector, selectorInput) => {
-    const errorMEssage = 'Что то пошло не так';
-    const loadMessage = 'Загрузка...';
-    const successMessage = 'Спасибо! Мы скоро с вами свяжемся';
+    const loadMessage = "Загрузка...";
     const form = document.getElementById(selector);
     let inputForm = document.querySelectorAll(selectorInput);
-    const statusMessage = document.createElement('div');
+    const statusMessage = document.createElement("div");
 
-    form.addEventListener('input', () => {
+    form.addEventListener("input", () => {
       const validForm = () => {
-        inputForm.forEach((item) => {
+        inputForm.forEach(item => {
           let textInput = item.value;
-          if (item.name === 'user_phone') {
-            item.value = textInput.replace(/[^0-9\+]/g, '');
+          if (item.name === "user_phone") {
+            item.value = textInput.replace(/[^0-9\+]/g, "");
           }
-          if (item.name === 'user_name' | item.name === 'user_message') {
-            item.value = textInput.replace(/[^а-яА-Я\s]/g, ''); // указывае какие символы пропускает input
+          if ((item.name === "user_name") | (item.name === "user_message")) {
+            item.value = textInput.replace(/[^а-яА-Я\s]/g, ""); // указывае какие символы пропускает input
           }
         });
       };
       validForm();
     });
 
-    form.addEventListener('submit', (event) => {
+    const successMessage = () => {
+      statusMessage.textContent = "Спасибо! Мы скоро с вами свяжемся";
+    };
+    const errorMessage = () => {
+      statusMessage.textContent = "Что то пошло не так";
+    };
+
+    form.addEventListener("submit", event => {
       event.preventDefault();
       form.appendChild(statusMessage);
       statusMessage.textContent = loadMessage;
@@ -401,41 +406,35 @@ window.addEventListener("DOMContentLoaded", function () {
       formData.forEach((val, key) => {
         body[key] = val;
       });
-      postData(body,
-        () => {
-          statusMessage.textContent = successMessage;
-        },
-        (error) => {
-          console.log(error);
-          statusMessage.textContent = errorMEssage;
-        });
+      postData(body)
+        .then(successMessage)
+        .catch(errorMessage);
     });
 
-    const postData = (body, outputData, errorData) => {
-      const request = new XMLHttpRequest();
-      request.addEventListener('readystatechange', () => {
-        if (request.readyState !== 4) {
-          return;
-        }
-        if (request.status === 200) {
-          outputData();
-          inputForm.forEach((item) => {
-            item.value = '';
-          });
-        } else {
-          errorData(request.status);
-
-        }
+    const postData = body => {
+      return new Promise((resolve, reject) => {
+        const request = new XMLHttpRequest();
+        request.addEventListener("readystatechange", () => {
+          if (request.readyState !== 4) {
+            return;
+          }
+          if (request.status === 200) {
+            resolve();
+            inputForm.forEach(item => {
+              item.value = "";
+            });
+          } else {
+            reject(request.status);
+          }
+        });
+        request.open("POST", "./server.php");
+        request.setRequestHeader("Content-Type", "application/json"); // настраиваем заголовки // Данные отправляем с формы в JSON формат
+        request.send(JSON.stringify(body)); // отправляем данные
       });
-      request.open('POST', './server.php');
-      request.setRequestHeader('Content-Type', 'application/json'); // настраиваем заголовки // Данные отправляем с формы в JSON формат
-      request.send(JSON.stringify(body)); // отправляем данные
     };
   };
 
-  sendForm('form1', 'input');
-  sendForm('form2', 'input');
-  sendForm('form3', 'input');
-
-
+  sendForm("form1", "input");
+  sendForm("form2", "input");
+  sendForm("form3", "input");
 });
