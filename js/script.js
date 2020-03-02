@@ -382,25 +382,27 @@ window.addEventListener("DOMContentLoaded", function () {
                         item.value = textInput.replace(/[^0-9\+]/g, "");
                     }
                     if ((item.name === "user_name") | (item.name === "user_message")) {
-                        item.value = textInput.replace(/[^а-яА-Я\s]/g, ""); // указывае какие символы пропускает input
+                        item.value = textInput.replace(/[^а-яА-Я\s]/g, "");
                     }
                 });
             };
             validForm();
         });
 
+        const resetForm = () => {
+            inputForm.forEach((item) => {
+                item.value = '';
+            });
+        };
+
         const successMessage = (response) => {
             if (response.status !== 200) {
+                statusMessage.textContent = 'Ошибка, что то пошло не так';
                 throw new Error('status network not 200');
             } else {
-                inputForm.forEach((item) => {
-                    item.value = '';
-                });
+                resetForm();
+                statusMessage.textContent = "Спасибо! Мы скоро с вами свяжемся";
             }
-            statusMessage.textContent = "Спасибо! Мы скоро с вами свяжемся";
-        };
-        const errorMessage = () => {
-            statusMessage.textContent = "Что то пошло не так";
         };
 
         form.addEventListener("submit", event => {
@@ -415,7 +417,7 @@ window.addEventListener("DOMContentLoaded", function () {
             });
             postData(body)
                 .then(successMessage)
-                .catch(errorMessage);
+                .catch();
         });
 
         const postData = body => {
