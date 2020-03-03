@@ -9,9 +9,20 @@ const toggleMenu = () => {
         menu.classList.toggle("active-menu");
     };
 
-    btnMenu.addEventListener("click", handlerMenu);
-    menu.addEventListener("click", event => {
+
+    body.addEventListener("click", event => {
         let target = event.target;
+
+        if (target.closest('.menu')) {
+            handlerMenu();
+            return;
+        }
+        if (menu.className === 'active-menu') {
+            if (target.closest('body') && target !== menu) {
+                handlerMenu();
+                return;
+            }
+        }
         if (target === closeBtn) {
             handlerMenu();
             return;
@@ -23,6 +34,7 @@ const toggleMenu = () => {
             }
             return;
         });
+
     });
 };
 

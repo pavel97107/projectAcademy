@@ -3,6 +3,7 @@ const sendForm = (selector, selectorInput) => {
     const form = document.getElementById(selector);
     const inputForm = document.querySelectorAll(selectorInput);
     const statusMessage = document.createElement("div");
+    statusMessage.style.color = 'white';
 
     form.addEventListener("input", () => {
         const validForm = () => {
