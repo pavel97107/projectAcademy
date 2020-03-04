@@ -27,6 +27,8 @@ const sendForm = (selector, selectorInput) => {
         });
     };
 
+
+
     const successMessage = (response) => {
         if (response.status !== 200) {
             statusMessage.textContent = 'Ошибка, что то пошло не так';
@@ -34,6 +36,7 @@ const sendForm = (selector, selectorInput) => {
         } else {
             resetForm();
             statusMessage.textContent = "Спасибо! Мы скоро с вами свяжемся";
+            setTimeout(() => statusMessage.remove(), 3000);
         }
     };
 
@@ -50,6 +53,8 @@ const sendForm = (selector, selectorInput) => {
         postData(body)
             .then(successMessage)
             .catch();
+
+
     });
 
     const postData = body => {
@@ -64,15 +69,16 @@ const sendForm = (selector, selectorInput) => {
     };
 
     const popContainer = document.querySelector(".popup");
+
     popContainer.addEventListener('click', (event) => {
         let target = event.target;
         if (target.closest('.popup-close')) {
-            form.removeChild(statusMessage);
+            statusMessage.remove();
             resetForm();
         } else {
             target = target.closest(".popup-content");
             if (!target) {
-                form.removeChild(statusMessage);
+                statusMessage.remove();
                 resetForm();
             }
         }

@@ -27,7 +27,7 @@ const toggleMenu = () => {
       return;
     }
     menuItems.forEach(item => {
-      target = target.closest("ul>li");
+      target = menuItems;
       if (item === target) {
         handlerMenu();
       }
