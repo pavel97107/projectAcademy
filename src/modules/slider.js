@@ -1,6 +1,5 @@
 const slider = () => {
     const slide = document.querySelectorAll(".portfolio-item"),
-        btn = document.querySelectorAll(".portfolio-btn"),
         slider = document.querySelector(".portfolio-content"),
         dotsPortfolio = document.querySelector(".portfolio-dots");
 

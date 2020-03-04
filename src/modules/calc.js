@@ -1,6 +1,6 @@
 const calc = (price = 100) => {
-    let calcBlock = document.querySelector(".calc-block");
-    let inputCalc = document.querySelectorAll(".calc-block input");
+    const calcBlock = document.querySelector(".calc-block");
+    const inputCalc = document.querySelectorAll(".calc-block input");
     const calcType = document.querySelector(".calc-type");
     const calcSquare = document.querySelector(".calc-square");
     const calcDay = document.querySelector(".calc-day");
@@ -20,8 +20,16 @@ const calc = (price = 100) => {
         const typeValue = calcType.options[calcType.selectedIndex].value;
         const squareValue = +calcSquare.value;
 
+        if (calcCount.value === 0 && calcDay.value === 0) {
+            return;
+        }
+
         if (calcCount.value > 1) {
             countValue += (calcCount.value - 1) / 10;
+        }
+
+        if (calcDay.value && calcDay.value === '0') {
+            dayValue -= 1;
         }
 
         if (calcDay.value && calcDay.value < 5) {

@@ -9,8 +9,7 @@ function countTimer(deadline) {
             timeRemaining = (dateStop - dateNow) / 1000, // конвертируем мили секунды в секунды
             seconds = Math.floor(timeRemaining % 60), // теперь мы имеем секунды(поулчаем чистые секунды делением на остаток)
             minutes = Math.floor((timeRemaining / 60) % 60), // теперь мы имеем минуты (вычисляем количество минут в часе!!!)
-            hours = Math.floor((timeRemaining / 60 / 60) % 24), // получили часы
-            day = Math.floor(timeRemaining / 60 / 60 / 24); // получили дни
+            hours = Math.floor((timeRemaining / 60 / 60) % 24); // получили часы
         return {
             timeRemaining,
             hours,
@@ -25,13 +24,13 @@ function countTimer(deadline) {
         timeMinutes.textContent = timer.minutes;
         timeSeconds.textContent = timer.seconds;
 
-        if (timer.hours >= 1 && timer.hours <= 9) {
+        if (timer.hours <= 9) {
             timeHours.textContent = "0" + timer.hours;
         }
-        if (timer.minutes >= 1 && timer.minutes <= 9) {
+        if (timer.minutes <= 9) {
             timeMinutes.textContent = "0" + timer.minutes;
         }
-        if (timer.seconds >= 0 && timer.seconds <= 9) {
+        if (timer.seconds <= 9) {
             timeSeconds.textContent = "0" + timer.seconds;
         }
 

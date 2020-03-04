@@ -3,6 +3,7 @@ const sendForm = (selector, selectorInput) => {
     const form = document.getElementById(selector);
     const inputForm = document.querySelectorAll(selectorInput);
     const statusMessage = document.createElement("div");
+    statusMessage.classList.add('status-message');
     statusMessage.style.color = 'white';
 
     form.addEventListener("input", () => {
@@ -61,6 +62,21 @@ const sendForm = (selector, selectorInput) => {
         });
 
     };
+
+    const popContainer = document.querySelector(".popup");
+    popContainer.addEventListener('click', (event) => {
+        let target = event.target;
+        if (target.closest('.popup-close')) {
+            form.removeChild(statusMessage);
+            resetForm();
+        } else {
+            target = target.closest(".popup-content");
+            if (!target) {
+                form.removeChild(statusMessage);
+                resetForm();
+            }
+        }
+    });
 };
 
 export default sendForm;
